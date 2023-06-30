@@ -1157,6 +1157,13 @@
   resolved "https://registry.yarnpkg.com/@plasmohq/init/-/init-0.6.4.tgz#fee98cd03e3631341bcfb0411ebbec41de5ea183"
   integrity sha512-zJVtRJiyqrxCfBhd0sUaJG/M0jhXlRjXQAekyCSrbgZWUFJNT08WyAwVmeIgS9Y3NoTY5kwT0mBuJb7Kykv0ag==
 
+"@plasmohq/messaging@^0.5.0":
+  version "0.5.0"
+  resolved "http://npm.shopee.io/@plasmohq%2fmessaging/-/messaging-0.5.0.tgz#c789c648593bfe5c256cc3012bfb4fe545fc36fa"
+  integrity sha512-cYF750rguJDvnyJls2IHVAJTPVFtCEaMHMhnRsENfGaNqcRfXVfzwBGOABPg3k1iSBWBYLySh3Ht7QvFSnB3RQ==
+  dependencies:
+    nanoid "4.0.2"
+
 "@plasmohq/parcel-bundler@0.5.4":
   version "0.5.4"
   resolved "https://registry.yarnpkg.com/@plasmohq/parcel-bundler/-/parcel-bundler-0.5.4.tgz#f5939d32a7c741ceb424fcddf3714f21a79dd371"
@@ -3488,6 +3495,11 @@ mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+nanoid@4.0.2:
+  version "4.0.2"
+  resolved "http://npm.shopee.io/nanoid/-/nanoid-4.0.2.tgz#140b3c5003959adbebf521c170f282c5e7f9fb9e"
+  integrity sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==
 
 nanoid@^3.3.6:
   version "3.3.6"

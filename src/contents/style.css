@@ -42,13 +42,13 @@
   cursor: pointer;
 }
 
-.modal-s > .ul {
-  margin-top: 16px;
-  margin-left: 16px;
+.modal-s > ul {
+  list-style: none;
   padding: 0;
+  margin: 16px 0 0 16px;
 }
 
-.modal-s .li {
+.modal-s li {
   margin-bottom: 8px;
 }
 
