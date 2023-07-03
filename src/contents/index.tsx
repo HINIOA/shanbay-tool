@@ -1,11 +1,15 @@
-import Modal, { type WordInfo } from "./Modal";
+import ErrorContent from "./ErrorContent";
 import type { Position } from "./TranslateBtn";
 import TranslateBtn from "./TranslateBtn";
+import WordContent from "./WordContent";
 import { sendToBackground } from "@plasmohq/messaging";
 import cssText from "data-text:~/contents/style.css";
 import { debounce } from "lodash";
 import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import { createRoot } from "react-dom/client";
+import type { ErrorRes } from "~api";
+import type { WordInfo } from "~background/messages/translate";
+
 
 export const getStyle = () => {
   const style = document.createElement("style");
@@ -26,6 +30,26 @@ export const render: PlasmoRender<PlasmoCSUIJSXContainer> = async ({
       return;
     }
 
+    async function translate(word: string): Promise<void> {
+      const userInfo = await sendToBackground<ErrorRes, WordInfo>({
+        name: "user",
+      });
+
+      if (userInfo.msg) {
+        renderModal(userInfo)
+        return
+      }
+
+      const wordInfo = await sendToBackground<any, WordInfo>({
+        name: "translate",
+        body: {
+          word,
+        },
+      });
+
+      renderModal(wordInfo);
+    }
+
     root.render(
       <TranslateBtn position={position} onClick={() => translate(word)} />
     );
@@ -36,23 +60,22 @@ export const render: PlasmoRender<PlasmoCSUIJSXContainer> = async ({
       return;
     }
 
-    root.render(<Modal wordInfo={wordInfo} position={position} />);
+    const Content = wordInfo.msg ? (
+      <ErrorContent wordInfo={wordInfo} />
+    ) : (
+      <WordContent wordInfo={wordInfo} />
+    );
+
+    root.render(
+      <div className="modal" style={{ ...position }}>
+        {Content}
+      </div>
+    );
   }
 
   function close(): void {
     root.render(null);
-    document.removeEventListener('click', close)
-  }
-
-  async function translate(word: string): Promise<void> {
-    const wordInfo = await sendToBackground<any, WordInfo>({
-      name: "translate",
-      body: {
-        word,
-      },
-    });
-
-    renderModal(wordInfo);
+    document.removeEventListener("click", close);
   }
 
   function handleSelect() {
