@@ -1,7 +1,7 @@
 .modal {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   z-index: 1000;
   box-sizing: border-box;
   border-radius: 10px;
@@ -73,7 +73,7 @@
 
 .translate-btn {
   line-height: 1.5715;
-  position: fixed;
+  position: absolute;
   display: inline-block;
   font-weight: 400;
   white-space: nowrap;
