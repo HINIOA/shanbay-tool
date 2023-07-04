@@ -1,4 +1,5 @@
 import { sendToBackground } from "@plasmohq/messaging";
+import cssText from "data-text:~/contents/style.css";
 import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import { useState, type FC } from "react";
 import type { WordInfo } from "~background/messages/translate";
@@ -95,6 +96,12 @@ const WordModal: FC<ModalProps> = ({ wordInfo }) => {
       )}
     </>
   );
+};
+
+export const getStyle = () => {
+  const style = document.createElement("style");
+  style.textContent = cssText;
+  return style;
 };
 
 // 取消自动渲染
