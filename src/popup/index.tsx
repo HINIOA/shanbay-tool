@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import "./popup.css"
+import "./styles.css"
 
 import { getUserInfo } from "~api"
 
