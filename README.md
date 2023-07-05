@@ -1,33 +1,38 @@
-This is a [Plasmo extension](https://docs.plasmo.com/) project bootstrapped with [`plasmo init`](https://www.npmjs.com/package/plasmo).
+# 扇贝学习工具
 
-## Getting Started
+扇贝学习浏览器扩展插件。功能：
 
-First, run the development server:
+* 翻译（单词/短语）
+* 添加生词本的
 
-```bash
+> 基于 [shanbay-tools](https://github.com/ethanyang163/shanbay-tools) 开发，使用 [Plasmo extension](https://docs.plasmo.com/) 重构并修复了一些问题。
+
+## 开发
+
+首先，运行开发服务器：
+
+``bash
 pnpm dev
-# or
+#或
 npm run dev
 ```
 
-Open your browser and load the appropriate development build. For example, if you are developing for the chrome browser, using manifest v3, use: `build/chrome-mv3-dev`.
+打开浏览器，加载相应的开发构建。例如，如果你正在为chrome浏览器开发，使用 manifest v3，请使用： `build/chrome-mv3-dev`。
 
-You can start editing the popup by modifying `popup.tsx`. It should auto-update as you make changes. To add an options page, simply add a `options.tsx` file to the root of the project, with a react component default exported. Likewise to add a content page, add a `content.ts` file to the root of the project, importing some module and do some logic, then reload the extension on your browser.
+[参考文档](https://docs.plasmo.com/)
 
-For further guidance, [visit our Documentation](https://docs.plasmo.com/)
+## 生产构建
 
-## Making production build
+运行以下程序：
 
-Run the following:
-
-```bash
+``bash
 pnpm build
-# or
+#或者
 npm run build
 ```
 
-This should create a production bundle for your extension, ready to be zipped and published to the stores.
+这将为你的扩展创建一个生产包，准备好被压缩并发布到商店。
 
-## Submit to the webstores
+## 提交到应用商店
 
-The easiest way to deploy your Plasmo extension is to use the built-in [bpp](https://bpp.browser.market) GitHub action. Prior to using this action however, make sure to build your extension and upload the first version to the store to establish the basic credentials. Then, simply follow [this setup instruction](https://docs.plasmo.com/framework/workflows/submit) and you should be on your way for automated submission!
+部署Plasmo扩展的最简单方法是使用内置的[bpp](https://bpp.browser.market) GitHub动作。不过在使用这个动作之前，请确保建立你的扩展并将第一个版本上传到商店，以建立基本的凭证。然后，只需按照[这个设置说明](https://docs.plasmo.com/framework/workflows/submit)，你就可以实现自动提交了!
