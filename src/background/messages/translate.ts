@@ -1,7 +1,10 @@
 import type { PlasmoMessaging } from "@plasmohq/messaging";
-import { check, translate } from "~api";
-import type { WordInfo } from "~contents/Modal";
+import { check, translate, type TranslateRes } from "~api";
 
+
+export interface WordInfo extends TranslateRes {
+  exists?: boolean;
+}
 
 const handler: PlasmoMessaging.MessageHandler<
   { word: string },

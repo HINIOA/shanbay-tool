@@ -1,16 +1,11 @@
-import type { Position } from "./TranslateBtn";
 import { sendToBackground } from "@plasmohq/messaging";
+import cssText from "data-text:~/contents/style.css";
 import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import { useState, type FC } from "react";
-import type { TranslateRes } from "~api";
-
-export interface WordInfo extends TranslateRes {
-  exists: boolean;
-}
+import type { WordInfo } from "~background/messages/translate";
 
 interface ModalProps {
   wordInfo: WordInfo;
-  position: Position;
 }
 
 const PART_OF_SPEECH = {
@@ -44,7 +39,7 @@ function speak(src: string) {
   audio.play();
 }
 
-const Modal: FC<ModalProps> = ({ wordInfo, position }) => {
+const WordModal: FC<ModalProps> = ({ wordInfo }) => {
   const { id, exists, content, audios, definitions } = wordInfo;
 
   function handleSpeak() {
@@ -64,11 +59,8 @@ const Modal: FC<ModalProps> = ({ wordInfo, position }) => {
     res && setIsAdded(true);
   }
 
-  const { left, top } = position || {};
-
   return (
-    <div className="modal-s" style={{ position: "fixed", top, left }}>
-      <div className="close-modal">X</div>
+    <>
       <div className="word">{content}</div>
       <div>
         <span className="phonetic">/{audios[0].us.ipa}/</span>
@@ -102,11 +94,17 @@ const Modal: FC<ModalProps> = ({ wordInfo, position }) => {
           {exists ? "我忘了" : "+添加到扇贝生词本"}
         </a>
       )}
-    </div>
+    </>
   );
+};
+
+export const getStyle = () => {
+  const style = document.createElement("style");
+  style.textContent = cssText;
+  return style;
 };
 
 // 取消自动渲染
 export const render: PlasmoRender<PlasmoCSUIJSXContainer> = async () => {};
 
-export default Modal;
+export default WordModal;

@@ -46,15 +46,20 @@ export const check = (vocab_id: string): Promise<CheckRes> =>
     `https://apiv3.shanbay.com/wordscollection/words_check?vocab_ids=${vocab_id}`
   );
 
-export interface TranslateRes {
-  audios: Audio[];
-  content: string;
-  definitions: Definitions;
-  id: string;
-  id_int: string;
-  ref_id: string;
-  vocab_type: string;
-  labels: any[];
+export interface ErrorRes {
+  msg?: string;
+  errors?: Record<string, any>;
+}
+
+export interface TranslateRes extends ErrorRes {
+  id?: string;
+  id_int?: string;
+  ref_id?: string;
+  labels?: any[];
+  audios?: Audio[];
+  content?: string;
+  vocab_type?: string;
+  definitions?: Definitions;
 }
 
 export interface Audio {
