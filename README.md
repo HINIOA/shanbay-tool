@@ -11,7 +11,7 @@
 
 首先，运行开发服务器：
 
-``bash
+```bash
 pnpm dev
 #或
 npm run dev
@@ -25,7 +25,7 @@ npm run dev
 
 运行以下程序：
 
-``bash
+```bash
 pnpm build
 #或者
 npm run build
@@ -35,4 +35,4 @@ npm run build
 
 ## 提交到应用商店
 
-部署Plasmo扩展的最简单方法是使用内置的[bpp](https://bpp.browser.market) GitHub动作。不过在使用这个动作之前，请确保建立你的扩展并将第一个版本上传到商店，以建立基本的凭证。然后，只需按照[这个设置说明](https://docs.plasmo.com/framework/workflows/submit)，你就可以实现自动提交了!
+部署 Plasmo 扩展的最简单方法是使用内置的 [bpp](https://bpp.browser.market) GitHub 动作。不过在使用这个动作之前，请确保建立你的扩展并将第一个版本上传到商店，以建立基本的凭证。然后，只需按照[这个设置说明](https://docs.plasmo.com/framework/workflows/submit)，你就可以实现自动提交了!
