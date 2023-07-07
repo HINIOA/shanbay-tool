@@ -30,7 +30,7 @@ export function useSelect(onSelect: () => void): {
       });
 
       onSelect();
-    });
+    }, 500);
 
     document.addEventListener("selectionchange", handleSelect);
   }, []);
@@ -40,16 +40,14 @@ export function useSelect(onSelect: () => void): {
 
 /** 点击元素外层的 Hook */
 export function useClickOutside<E extends Element>(
-  initVisible: boolean,
+  wait?: number,
   onClickOutside?: () => void
 ) {
-  const [visible, setVisible] = useState(initVisible);
   const ref = useRef<E>(null);
 
   useEffect(() => {
     function handleClick(e: Event): void {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        setVisible(false);
         onClickOutside?.();
       }
     }
@@ -57,16 +55,16 @@ export function useClickOutside<E extends Element>(
     // timeout 是为了解决元素显示同时点击外层的误关闭问题
     setTimeout(() => {
       document.addEventListener("click", handleClick);
-    }, 100);
+    }, wait);
 
     return () => {
       document.removeEventListener("click", handleClick);
     };
-  }, []);
+  }, [wait, onClickOutside]);
 
   const onWrapperClick: MouseEventHandler<E> = (e) => {
     e.stopPropagation();
   };
 
-  return { ref, visible, setVisible, onWrapperClick };
+  return { ref, onWrapperClick };
 }

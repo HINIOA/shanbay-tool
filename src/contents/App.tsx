@@ -2,7 +2,7 @@ import Modal from "./Modal";
 import TranslateBtn from "./TranslateBtn";
 import { useClickOutside, useSelect } from "./hooks";
 import cssText from "data-text:~/contents/style.css";
-import { type FC, useState } from "react";
+import { type FC, useState, type PropsWithChildren } from "react";
 import type { WordInfo } from "~background/messages/translate";
 
 export const getStyle = () => {
@@ -11,11 +11,14 @@ export const getStyle = () => {
   return style;
 };
 
-const App: FC = () => {
-  const [wordInfo, setWordInfo] = useState<WordInfo>();
-  const { ref, visible, setVisible, onWrapperClick } =
-    useClickOutside<HTMLDivElement>(false, () => setWordInfo(undefined));
-  const { selection, position } = useSelect(() => setVisible(true));
+const Wrapper: FC<
+  PropsWithChildren<{
+    visible: boolean;
+    onClickOutside: () => void;
+  }>
+> = ({ visible, children, onClickOutside }) => {
+  const { ref, onWrapperClick } =
+    useClickOutside<HTMLDivElement>(500, onClickOutside);
 
   return (
     <div
@@ -23,6 +26,29 @@ const App: FC = () => {
       style={{ visibility: visible ? "visible" : "hidden" }}
       onClick={onWrapperClick}
     >
+      {children}
+    </div>
+  );
+};
+
+const App: FC = () => {
+  const [visible, setVisible] = useState(false);
+  const [wordInfo, setWordInfo] = useState<WordInfo>();
+  const { selection, position } = useSelect(() => {
+    setVisible(true);
+  });
+
+  if (!selection) {
+    return null;
+  }
+
+  function handleClickOutside() {
+    setVisible(false)
+    setWordInfo(undefined)
+  }
+
+  return (
+    <Wrapper visible={visible} onClickOutside={handleClickOutside}>
       {wordInfo ? (
         <Modal position={position} wordInfo={wordInfo} />
       ) : (
@@ -33,7 +59,7 @@ const App: FC = () => {
           onTranslate={setWordInfo}
         />
       )}
-    </div>
+    </Wrapper>
   );
 };
 
