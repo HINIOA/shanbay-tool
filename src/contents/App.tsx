@@ -13,14 +13,16 @@ export const getStyle = () => {
 
 const App: FC = () => {
   const [wordInfo, setWordInfo] = useState<WordInfo>();
-  const { ref, visible, setVisible } = useClickOutside<HTMLDivElement>(
-    false,
-    () => setWordInfo(undefined)
-  );
+  const { ref, visible, setVisible, onWrapperClick } =
+    useClickOutside<HTMLDivElement>(false, () => setWordInfo(undefined));
   const { selection, position } = useSelect(() => setVisible(true));
 
   return (
-    <div ref={ref} style={{ visibility: visible ? "visible" : "hidden" }}>
+    <div
+      ref={ref}
+      style={{ visibility: visible ? "visible" : "hidden" }}
+      onClick={onWrapperClick}
+    >
       {wordInfo ? (
         <Modal position={position} wordInfo={wordInfo} />
       ) : (

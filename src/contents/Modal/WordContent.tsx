@@ -70,14 +70,14 @@ const WordModal: FC<ModalProps> = ({ wordInfo }) => {
       </div>
       <ul>
         {definitions.cn.map(({ pos, def }) => (
-          <li key={pos}>
+          <li key={def}>
             【<b>{PART_OF_SPEECH[pos]}</b>】 {def}
           </li>
         ))}
       </ul>
       <ul>
         {definitions.en.map(({ pos, def }) => (
-          <li key={pos}>
+          <li key={def}>
             <em>
               <b>{pos}</b>
             </em>{" "}
