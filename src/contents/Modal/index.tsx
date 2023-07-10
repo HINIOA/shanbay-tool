@@ -1,27 +1,25 @@
-import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
-import {
-  type FC,
-} from "react";
-import type { WordInfo } from "~background/messages/translate";
-import type { Position } from "~contents/TranslateBtn";
 import ErrorContent from "./ErrorContent";
 import WordContent from "./WordContent";
+import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
+import { type FC } from "react";
+import type { WordInfo } from "~background/messages/translate";
+import type { Position } from "~contents/TranslateBtn";
+import { useOverflow } from "~contents/hooks";
 
-const Modal: FC<{ position: Position, wordInfo: WordInfo }> = ({
-  position,
-  wordInfo,
-}) => {
+const Modal: FC<{
+  position: Position;
+  wordInfo: WordInfo;
+  visible: boolean;
+}> = ({ visible, position, wordInfo }) => {
+  const { style, ref } = useOverflow(position, visible);
 
   return (
-    <div
-      className="modal"
-      style={position}
-    >
+    <div ref={ref} style={style} className="modal">
       {wordInfo.msg ? (
-      <ErrorContent wordInfo={wordInfo} />
-    ) : (
-      <WordContent wordInfo={wordInfo} />
-    )}
+        <ErrorContent wordInfo={wordInfo} />
+      ) : (
+        <WordContent wordInfo={wordInfo} />
+      )}
     </div>
   );
 };
