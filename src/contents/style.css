@@ -1,3 +1,7 @@
+#plasmo-overlay-0 {
+  position: relative !important;
+}
+
 .modal {
   display: flex;
   flex-direction: column;

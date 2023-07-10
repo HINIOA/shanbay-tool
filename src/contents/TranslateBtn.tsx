@@ -1,3 +1,4 @@
+import { useOverflow } from "./hooks";
 import { sendToBackground } from "@plasmohq/messaging";
 import type { PlasmoCSUIJSXContainer, PlasmoRender } from "plasmo";
 import type { FC, MouseEventHandler } from "react";
@@ -5,21 +6,27 @@ import type { ErrorRes } from "~api";
 import type { WordInfo } from "~background/messages/translate";
 
 export interface Position {
-  left: number;
-  top: number;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
 }
 
 interface TranslateBtnProps {
   word: string;
+  visible: boolean;
   position: Position;
   onTranslate: (wordInfo: WordInfo) => void;
 }
 
 const TranslateBtn: FC<TranslateBtnProps> = ({
   word,
+  visible,
   position,
   onTranslate,
 }) => {
+  const { style, ref } = useOverflow(position, visible);
+
   const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.stopPropagation();
 
@@ -43,7 +50,12 @@ const TranslateBtn: FC<TranslateBtnProps> = ({
   };
 
   return (
-    <button className="translate-btn" style={position} onClick={handleClick}>
+    <button
+      ref={ref}
+      style={style}
+      className="translate-btn"
+      onClick={handleClick}
+    >
       扇贝翻译
     </button>
   );

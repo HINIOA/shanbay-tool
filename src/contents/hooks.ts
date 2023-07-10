@@ -1,6 +1,13 @@
 import type { Position } from "./TranslateBtn";
 import { debounce } from "lodash";
-import { useEffect, useRef, useState, type MouseEventHandler } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEventHandler,
+  type RefCallback,
+  type CSSProperties,
+} from "react";
 
 /** 添加选择事件处理的 Hook，返回选中值及鼠标位置。 */
 export function useSelect(onSelect: () => void): {
@@ -22,11 +29,13 @@ export function useSelect(onSelect: () => void): {
       setSelection(word);
 
       const range = selection.getRangeAt(0);
-      const rect = range.getBoundingClientRect();
+      const { top, left, right, bottom } = range.getBoundingClientRect();
 
       setPosition({
-        left: rect.left + window.scrollX,
-        top: rect.bottom + window.scrollY,
+        top: top + window.scrollY,
+        left: left + window.scrollX,
+        right: right + window.scrollX,
+        bottom: bottom + window.scrollY,
       });
 
       onSelect();
@@ -67,4 +76,49 @@ export function useClickOutside<E extends Element>(
   };
 
   return { ref, onWrapperClick };
+}
+
+/** 当元素超过窗口，重新计算元素位置并返回 */
+export function useOverflow<E extends Element>(
+  selectionPosition: Position,
+  initVisible: boolean
+): {
+  style: CSSProperties;
+  ref: RefCallback<E>;
+} {
+  const [position, setPosition] = useState<Position>({
+    top: selectionPosition.bottom, // 默认在选中内容的底部显示
+    left: selectionPosition.left,
+  });
+  const [visible, setVisible] = useState(false);
+
+  const ref: RefCallback<E> = (node) => {
+    if (!node || visible) {
+      return;
+    }
+
+    const { right, bottom, height } = node.getBoundingClientRect();
+
+    setPosition((position) => {
+      if (right > window.innerWidth) {
+        delete position.left;
+        position.right = 0;
+      }
+
+      if (bottom > window.innerHeight) {
+        position.top = selectionPosition.top - height - 12;
+      }
+
+      return position;
+    });
+    setVisible(true);
+  };
+
+  return {
+    style: {
+      ...position,
+      visibility: visible && initVisible ? "visible" : "hidden",
+    },
+    ref,
+  };
 }

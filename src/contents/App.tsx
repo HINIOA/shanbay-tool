@@ -13,19 +13,16 @@ export const getStyle = () => {
 
 const Wrapper: FC<
   PropsWithChildren<{
-    visible: boolean;
     onClickOutside: () => void;
   }>
-> = ({ visible, children, onClickOutside }) => {
-  const { ref, onWrapperClick } =
-    useClickOutside<HTMLDivElement>(500, onClickOutside);
+> = ({ children, onClickOutside }) => {
+  const { ref, onWrapperClick } = useClickOutside<HTMLDivElement>(
+    500,
+    onClickOutside
+  );
 
   return (
-    <div
-      ref={ref}
-      style={{ visibility: visible ? "visible" : "hidden" }}
-      onClick={onWrapperClick}
-    >
+    <div ref={ref} onClick={onWrapperClick}>
       {children}
     </div>
   );
@@ -43,18 +40,19 @@ const App: FC = () => {
   }
 
   function handleClickOutside() {
-    setVisible(false)
-    setWordInfo(undefined)
+    setVisible(false);
+    setWordInfo(undefined);
   }
 
   return (
-    <Wrapper visible={visible} onClickOutside={handleClickOutside}>
+    <Wrapper onClickOutside={handleClickOutside}>
       {wordInfo ? (
-        <Modal position={position} wordInfo={wordInfo} />
+        <Modal visible={visible} position={position} wordInfo={wordInfo} />
       ) : (
         <TranslateBtn
           key={selection}
           word={selection}
+          visible={visible}
           position={position}
           onTranslate={setWordInfo}
         />
